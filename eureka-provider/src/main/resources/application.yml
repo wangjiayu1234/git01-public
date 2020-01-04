@@ -1,0 +1,66 @@
+# 端口号
+server:
+  port: 7201
+# 服务名称
+spring:
+  profiles: provider-1
+  application:
+    name: eureka-provider
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/syspro?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123
+
+
+mybatis:
+ mapper-locations: classpath*:mapper/*.xml
+ type-aliases-package: com.zking.eurekaprovider.model
+
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+
+
+
+
+# 服务注册与发现相关配置
+eureka:
+  client:
+    # 注册中心地址
+    serviceUrl:
+      defaultZone: http://peer1:7101/eureka/,http://peer2:7102/eureka/,http://peer3:7103/eureka/
+
+hello:
+  msg:  ${hello}
+
+
+#    healthcheck:
+#      enabled: true
+#  instance:
+#    lease-renewal-interval-in-seconds: 10
+#    lease-expiration-duration-in-seconds: 10
+
+---
+# 端口号
+server:
+  port: 7202
+# 服务名称
+spring:
+  profiles: provider-2
+  application:
+    name: eureka-provider
+# 服务注册与发现相关配置
+eureka:
+  client:
+    # 注册中心地址
+    serviceUrl:
+      defaultZone: http://peer1:7101/eureka/,http://peer2:7102/eureka/,http://peer3:7103/eureka/
+
+hello:
+  msg:  ${hello}
+

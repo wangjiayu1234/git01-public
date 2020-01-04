@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.eurekaprovider.mapper.SysFunctionWebMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.eurekaprovider.model.SysFunctionWeb" >
+    <constructor >
+      <arg column="function_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="function_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="path" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="parameter" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="method" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="function_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="up_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+
+
+  <select id="selectgetAll"  resultType="java.util.Map"  parameterType="com.zking.eurekaprovider.model.SysFunctionWeb" >
+    SELECT  * FROM  sys_function_web
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_function_web
+    where function_id = #{functionId,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.zking.eurekaprovider.model.SysFunctionWeb" >
+    update sys_function_web
+    set function_name = #{functionName,jdbcType=VARCHAR},
+    path = #{path,jdbcType=VARCHAR},
+    parameter = #{parameter,jdbcType=VARCHAR},
+    method = #{method,jdbcType=VARCHAR},
+    function_desc = #{functionDesc,jdbcType=VARCHAR},
+    up_time = #{upTime,jdbcType=TIMESTAMP},
+    where function_id = #{functionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.eurekaprovider.model.SysFunctionWeb" >
+    update sys_function_web
+    <set >
+      <if test="functionName != null" >
+        function_name = #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null" >
+        parameter = #{parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="functionDesc != null" >
+        function_desc = #{functionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        up_time = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+
+    </set>
+    where function_id = #{functionId,jdbcType=BIGINT}
+  </update>
+
+
+
+
+
+
+  <insert id="insert" parameterType="com.zking.eurekaprovider.model.SysFunctionWeb" >
+    insert into sys_function_web (function_id, function_name, path, 
+      parameter, method, function_desc, 
+      up_time)
+    values (#{functionId,jdbcType=BIGINT}, #{functionName,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{parameter,jdbcType=BIGINT}, #{method,jdbcType=VARCHAR}, #{functionDesc,jdbcType=VARCHAR}, 
+      #{upTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.eurekaprovider.model.SysFunctionWeb" >
+    insert into sys_function_web
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="functionId != null" >
+        function_id,
+      </if>
+      <if test="functionName != null" >
+        function_name,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="parameter != null" >
+        parameter,
+      </if>
+      <if test="method != null" >
+        method,
+      </if>
+      <if test="functionDesc != null" >
+        function_desc,
+      </if>
+      <if test="upTime != null" >
+        up_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="functionId != null" >
+        #{functionId,jdbcType=BIGINT},
+      </if>
+      <if test="functionName != null" >
+        #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null" >
+        #{parameter,jdbcType=BIGINT},
+      </if>
+      <if test="method != null" >
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="functionDesc != null" >
+        #{functionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

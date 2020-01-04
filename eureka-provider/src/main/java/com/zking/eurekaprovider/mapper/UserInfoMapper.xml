@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.eurekaprovider.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.eurekaprovider.model.UserInfo" >
+    <constructor >
+      <idArg column="info_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="info_hao" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="info_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="info_yg" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="info_zt" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="info_gz" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <!--<resultMap id="row" type="com.zking.eurekaprovider.model.UserInfo" >-->
+      <!--<id column="info_id" property="infoId" jdbcType="INTEGER" javaType="java.lang.Integer" />-->
+      <!--<result column="info_hao" property="infoHao"  jdbcType="VARCHAR" javaType="java.lang.String" />-->
+      <!--<result column="info_name" property="infoName"  jdbcType="VARCHAR" javaType="java.lang.String" />-->
+      <!--<result column="info_yuge" property="infoYuge"  jdbcType="VARCHAR" javaType="java.lang.String" />-->
+      <!--<result column="info_zt" property="infoZt" jdbcType="INTEGER" javaType="java.lang.Integer" />-->
+      <!--<result column="info_gz" property="infoGz"  jdbcType="INTEGER" javaType="java.lang.Integer" />-->
+  <!--</resultMap>-->
+  <sql id="Base_Column_List" >
+    info_id, info_hao, info_name, info_yg, info_zt, info_gz
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </select>
+  <select id="selectgetAll"  resultType="java.util.Map"  parameterType="com.zking.eurekaprovider.model.UserInfo" >
+SELECT  a.info_id,b.uname,a.info_name,a.info_hao,c.zh_sm FROM user_info a LEFT OUTER JOIN USER b ON
+a.info_id=b.uid
+LEFT OUTER JOIN user_info_zt c ON b.uid=c.zt_zh
+WHERE a.info_zt=11
+  </select>
+
+  <select id="selectgetAll2" resultType="java.util.Map"  parameterType="com.zking.eurekaprovider.model.UserInfo" >
+    SELECT  a.info_id,b.uname,a.info_name,a.info_hao,c.zt_gz FROM user_info a LEFT OUTER JOIN USER b ON
+a.info_id=b.uid
+LEFT OUTER JOIN user_info_zt c ON b.uid=c.zt_zh
+WHERE a.info_gz=33
+  </select>
+
+  <select id="selectgetAll3" resultType="java.util.Map"  parameterType="com.zking.eurekaprovider.model.UserInfo" >
+SELECT  a.*,b.uname,c.zh_sm,c.zt_zt2 FROM user_info a LEFT OUTER JOIN USER b ON
+a.info_id=b.uid
+LEFT OUTER JOIN user_info_zt c ON a.info_zt=c.zt_zh ORDER BY info_id ASC
+  </select>
+
+  <select id="selectgetAll4" resultType="java.util.Map"  parameterType="com.zking.eurekaprovider.model.UserInfo" >
+SELECT  a.*,b.uname,c.zh_sm,c.zt_zt2 FROM user_info a LEFT OUTER JOIN USER b ON
+a.info_id=b.uid
+LEFT OUTER JOIN user_info_zt c ON a.info_zt=c.zt_zh
+WHERE a.info_id=  #{infoId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_info
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.eurekaprovider.model.UserInfo" >
+    insert into user_info (info_id, info_hao, info_name,
+      info_yg, info_zt, info_gz
+      )
+    values (#{infoId,jdbcType=INTEGER}, #{infoHao,jdbcType=VARCHAR}, #{infoName,jdbcType=VARCHAR},
+      #{infoYG,jdbcType=VARCHAR}, #{infoZt,jdbcType=INTEGER}, #{infoGz,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.eurekaprovider.model.UserInfo" >
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="infoId != null" >
+        info_id,
+      </if>
+      <if test="infoHao != null" >
+        info_hao,
+      </if>
+      <if test="infoName != null" >
+        info_name,
+      </if>
+      <if test="infoYG != null" >
+        info_yg,
+      </if>
+      <if test="infoZt != null" >
+        info_zt,
+      </if>
+      <if test="infoGz != null" >
+        info_gz,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="infoId != null" >
+        #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="infoHao != null" >
+        #{infoHao,jdbcType=VARCHAR},
+      </if>
+      <if test="infoName != null" >
+        #{infoName,jdbcType=VARCHAR},
+      </if>
+      <if test="infoYG != null" >
+        #{infoYG,jdbcType=VARCHAR},
+      </if>
+      <if test="infoZt != null" >
+        #{infoZt,jdbcType=INTEGER},
+      </if>
+      <if test="infoGz != null" >
+        #{infoGz,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.eurekaprovider.model.UserInfo" >
+    update user_info
+    <set >
+      <if test="infoHao != null" >
+        info_hao = #{infoHao,jdbcType=VARCHAR},
+      </if>
+      <if test="infoName != null" >
+        info_name = #{infoName,jdbcType=VARCHAR},
+      </if>
+      <if test="infoYG != null" >
+        info_yg = #{infoYG,jdbcType=VARCHAR},
+      </if>
+      <if test="infoZt != null" >
+        info_zt = #{infoZt,jdbcType=VARCHAR},
+      </if>
+      <if test="infoGz != null" >
+        info_gz = #{infoGz,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.eurekaprovider.model.UserInfo" >
+    update user_info
+    set info_hao = #{infoHao,jdbcType=VARCHAR},
+      info_name = #{infoName,jdbcType=VARCHAR},
+      info_yg = #{infoYG,jdbcType=VARCHAR},
+      info_zt = #{infoZt,jdbcType=INTEGER},
+      info_gz = #{infoGz,jdbcType=INTEGER}
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </update>
+</mapper>

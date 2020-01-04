@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.eurekaprovider.mapper.SysFunctionMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.eurekaprovider.model.SysFunction" >
+    <constructor >
+      <idArg column="function_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="function_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="path" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="parameter" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="method" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="function_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="icon" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="row" type="com.zking.eurekaprovider.model.SysFunction">
+    <id column="function_id" property="functionId" javaType="java.lang.Long" jdbcType="BIGINT" />
+    <result column="function_name" property="functionName" javaType="java.lang.String" jdbcType="VARCHAR" />
+    <result column="path" property="path" javaType="java.lang.String" jdbcType="VARCHAR" />
+    <result column="parameter" jdbcType="BIGINT" javaType="java.lang.Long" />
+    <result column="method" property="method" javaType="java.lang.String" jdbcType="VARCHAR" />
+    <result column="function_desc" property="functionDesc" javaType="java.lang.String" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" javaType="java.lang.String" jdbcType="VARCHAR" />
+    <collection column="function_id" property="children" ofType="com.zking.eurekaprovider.model.SysFunction" javaType="java.util.ArrayList" select="list2"/>
+
+  </resultMap>
+
+
+
+  <sql id="Base_Column_List" >
+    function_id, function_name, path, parameter, method, function_desc, icon
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_function
+    where function_id = #{functionId,jdbcType=BIGINT}
+  </select>
+  <select id="list" resultMap="row" parameterType="com.zking.eurekaprovider.model.SysFunction">
+    --     SELECT a.* FROM sys_function a LEFT OUTER JOIN sys_role_function b ON
+    --     a.function_id=b.function_id
+    --     LEFT OUTER JOIN sys_role c ON b.role_id=c.role_id
+    --     WHERE a.parameter=1 AND c.role_name='王宇'
+    SELECT * FROM sys_function
+    WHERE parameter=1
+  </select>
+  <select id="list2" resultMap="row" parameterType="com.zking.eurekaprovider.model.SysFunction">
+    SELECT * FROM sys_function  where parameter=#{function_id}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_function
+    where function_id = #{functionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zking.eurekaprovider.model.SysFunction" >
+    insert into sys_function (function_id, function_name, path,
+    parameter, method, function_desc,
+    icon)
+    values (#{functionId,jdbcType=BIGINT}, #{functionName,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR},
+    #{parameter,jdbcType=BIGINT}, #{method,jdbcType=VARCHAR}, #{functionDesc,jdbcType=VARCHAR},
+    #{icon,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.eurekaprovider.model.SysFunction" >
+    insert into sys_function
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="functionId != null" >
+        function_id,
+      </if>
+      <if test="functionName != null" >
+        function_name,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="parameter != null" >
+        parameter,
+      </if>
+      <if test="method != null" >
+        method,
+      </if>
+      <if test="functionDesc != null" >
+        function_desc,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="functionId != null" >
+        #{functionId,jdbcType=BIGINT},
+      </if>
+      <if test="functionName != null" >
+        #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null" >
+        #{parameter,jdbcType=BIGINT},
+      </if>
+      <if test="method != null" >
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="functionDesc != null" >
+        #{functionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.eurekaprovider.model.SysFunction" >
+    update sys_function
+    <set>
+      <if test="functionName != null" >
+        function_name = #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null" >
+        parameter = #{parameter,jdbcType=BIGINT},
+      </if>
+      <if test="method != null" >
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="functionDesc != null" >
+        function_desc = #{functionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where function_id = #{functionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.eurekaprovider.model.SysFunction" >
+    update sys_function
+    set function_name = #{functionName,jdbcType=VARCHAR},
+    path = #{path,jdbcType=VARCHAR},
+    parameter = #{parameter,jdbcType=BIGINT},
+    method = #{method,jdbcType=VARCHAR},
+    function_desc = #{functionDesc,jdbcType=VARCHAR},
+    icon = #{icon,jdbcType=VARCHAR}
+    where function_id = #{functionId,jdbcType=BIGINT}
+  </update>
+</mapper>
